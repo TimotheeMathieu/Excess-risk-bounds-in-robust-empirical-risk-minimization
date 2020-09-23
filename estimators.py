@@ -4,6 +4,8 @@ import inspect
 
    
 class _huber():
+    '''Compute Huber estimator with parameter beta. If beta is None, use the median absolute deviation.
+    '''
     def __init__(self, beta=None, maxiter=100, tol=1e-6):
         args, _, _, values = inspect.getargvalues(inspect.currentframe())
         values.pop("self")
@@ -21,6 +23,8 @@ class _huber():
 
     def estimate(self, X):
         beta = self.beta
+        if beta is None:
+            beta = np.median(np.abs(X-np.median(X)))
         if beta == 0:
             return np.median(X)
         # Initialization
@@ -87,7 +91,11 @@ def blockMOM(K,x):
     return [perm[b] for  b in blocks]
 
 class classifier(BaseEstimator):
-    def __init__( self,w0=None,K=3,eta0=1e-1,beta=1e-3,momentum=0.9,epochs=200,tol=1e-3,step='inverse',Delta=None,shuffle=True):
+    """ 
+    Compute Robust Logistic Regression classifier as described in the article.
+    Only for binary classification.
+    """
+    def __init__( self,w0=None,K=3,eta0=1e-1,beta=1e-3,epochs=200,tol=1e-3,Delta=None,shuffle=True):
         args, _, _, values = inspect.getargvalues(inspect.currentframe())
         values.pop("self")
         for arg, val in values.items():
@@ -142,8 +150,7 @@ class classifier(BaseEstimator):
                 blocks=blockMOM(self.K,X)
             grad,l=self.dmu(w,X,y,blocks)
             self.losses+=[l]
-            v=self.momentum*v+(1-self.momentum)*pas(t)*grad
-            w=w+v
+            w=w+pas(t)*grad
         self.w=w
         self.coef_=w[:-1]
 
@@ -159,7 +166,10 @@ class classifier(BaseEstimator):
         return  np.mean(self.predict(x)==y)
     
 class regressor(BaseEstimator):
-    def __init__( self,w0=None,K=3,eta0=1e-1,beta=1e-3,momentum=0.9,epochs=300,tol=1e-3,Delta=None,shuffle=True):
+    """
+    Compute Robust least square linear regressor as described in the article.
+    """
+    def __init__( self,w0=None,K=3,eta0=1e-1,beta=1e-3,epochs=300,tol=1e-3,Delta=None,shuffle=True):
         args, _, _, values = inspect.getargvalues(inspect.currentframe())
         values.pop("self")
         for arg, val in values.items():
@@ -206,8 +216,7 @@ class regressor(BaseEstimator):
                 blocks=blockMOM(self.K,X)
             grad,l=self.dmu(w,X,y,blocks)
             self.losses+=[l]
-            v=self.momentum*v+(1-self.momentum)*pas(t)*grad
-            w=w+v
+            w=w+pas(t)*grad
         self.w=w
         self.coef_=w[:-1]
 
