@@ -40,8 +40,6 @@ def score(clf, N=100, Nt=1000, M=300, Nc=3):
     return res
 
 
-Ks = np.arange(3, 80, 6)
-
 
 def errorbar(x, y, err, legend, color):
     plt.plot(x, y, label=legend, color=color)
@@ -58,16 +56,13 @@ def error(x, axis=0):
 
 clf = LogisticRegression(C=1e3)
 
-M = 300
+M = 50
 
 s = score(clf, 100, 1000, M, 0)
 
 Ks = np.arange(3, 80, 10)
 reshom = []
 resmom = []
-
-# In this script we use momentum contrary to what is done for the article because without it the convergence is much harder to have.
-# The reason we chose to put this script is 1) it would allow an interested user to tinker with it, without momentum changing the parameters would make the algo non convergent 2) this also allows for a much faster computation because we don't need a lot of epoch and a high M.
 
 plt.subplot(2, 2, 1)
 
@@ -142,7 +137,6 @@ plt.ylabel("accuracy")
 plt.title("N=100, 10 outliers")
 
 plt.legend()
-Ks = np.arange(3, 800, 100)
 
 plt.subplot(2, 2, 3)
 reshom = []
@@ -150,10 +144,13 @@ resmom = []
 s = score(clf, 1000, 1000, M, 0)
 
 for K in tqdm(Ks):
-    clfmom = classifier(K=int(K), Delta=0, beta=0, eta0=0.1)
-    clfhom = classifier(K=int(K), Delta=1, eta0=0.1, beta=0)
+    clfmom = classifier(K=int(K), Delta=0, beta=0, eta0=1)
+    clfhom = classifier(K=int(K), Delta=1, eta0=1, beta=0)
     reshom += [score(clfhom, 1000, 1000, M, 0)]
     resmom += [score(clfmom, 1000, 1000, M, 0)]
+
+
+Ks = np.arange(3, 800, 100)
 
 errorbar(
     Ks,
