@@ -142,19 +142,20 @@ def error(x, axis=0):
         np.vstack([np.percentile(x, 25, axis=axis), np.percentile(x, 75, axis=axis)])
     )
 
+def plot_figure():
 
-# M is smaller that what was used in the article because what was used in the article is
-# rather long to compute.
-clf61 = regressor(K=61, eta0=1, Delta=1, beta=0, epochs=200, shuffle=False)
-clf91 = regressor(K=91, eta0=1, Delta=1, beta=0, epochs=200, shuffle=False)
-clf151 = regressor(K=151, eta0=1, Delta=1, beta=0, epochs=200, shuffle=False)
-res61 = scores(clf61, "Delta", np.logspace(-3, 4.5, num=20), M=50, N=900)
-res91 = scores(clf91, "Delta", np.logspace(-3, 4.5, num=20), M=50, N=900)
-res151 = scores(clf151, "Delta", np.logspace(-3, 4.5, num=20), M=50, N=900)
+    # M is smaller that what was used in the article because what was used in the article is
+    # rather long to compute.
+    clf61 = regressor(K=61, eta0=1, Delta=1, beta=0, epochs=200, shuffle=False)
+    clf91 = regressor(K=91, eta0=1, Delta=1, beta=0, epochs=200, shuffle=False)
+    clf151 = regressor(K=151, eta0=1, Delta=1, beta=0, epochs=200, shuffle=False)
+    res61 = scores(clf61, "Delta", np.logspace(-3, 4.5, num=20), M=50, N=900)
+    res91 = scores(clf91, "Delta", np.logspace(-3, 4.5, num=20), M=50, N=900)
+    res151 = scores(clf151, "Delta", np.logspace(-3, 4.5, num=20), M=50, N=900)
 
-Ds = np.logspace(-3, 4.5, num=20)
-errorbar(Ds, np.median(res61, axis=1), error(res61, axis=1), "K=61", color="b")
-errorbar(Ds, np.median(res91, axis=1), error(res91, axis=1), "K=91", color="r")
-errorbar(Ds, np.median(res151, axis=1), error(res151, axis=1), "K=151", color="green")
-plt.legend()
-plt.show()
+    Ds = np.logspace(-3, 4.5, num=20)
+    errorbar(Ds, np.median(res61, axis=1), error(res61, axis=1), "K=61", color="b")
+    errorbar(Ds, np.median(res91, axis=1), error(res91, axis=1), "K=91", color="r")
+    errorbar(Ds, np.median(res151, axis=1), error(res151, axis=1), "K=151", color="green")
+    plt.legend()
+    plt.show()

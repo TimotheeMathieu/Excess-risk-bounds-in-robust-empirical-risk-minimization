@@ -33,27 +33,28 @@ clf.fit(Xtrain, ytrain)
 
 
 # Make the plot
+def plot_figure():
 
 
-plt.figure(figsize=(10, 3))
-plt.subplot(1, 2, 1)  # LR plot
+    plt.figure(figsize=(10, 3))
+    plt.subplot(1, 2, 1)  # LR plot
 
 
-xx, yy = np.meshgrid(np.linspace(-5, 25, num=100), np.linspace(-5, 9, num=100))
-Z = lr.predict(np.c_[xx.ravel(), yy.ravel()])
-Z = Z.reshape(xx.shape)
-plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
+    xx, yy = np.meshgrid(np.linspace(-5, 25, num=100), np.linspace(-5, 9, num=100))
+    Z = lr.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
 
 
-plt.scatter(Xtrain[:, 0], Xtrain[:, 1], c=ytrain)
-plt.title("Logistic")
-plt.subplot(1, 2, 2)  # Our plot
+    plt.scatter(Xtrain[:, 0], Xtrain[:, 1], c=ytrain)
+    plt.title("Logistic")
+    plt.subplot(1, 2, 2)  # Our plot
 
-Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-Z = Z.reshape(xx.shape)
-plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    plt.pcolormesh(xx, yy, Z, cmap=plt.cm.Paired)
 
 
-plt.scatter(Xtrain[:, 0], Xtrain[:, 1], c=ytrain)
-plt.title("Ours")
-plt.show()
+    plt.scatter(Xtrain[:, 0], Xtrain[:, 1], c=ytrain)
+    plt.title("Ours")
+    plt.show()

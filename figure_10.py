@@ -68,13 +68,15 @@ shub = scores(hr, X, y, "fit_intercept", [True], n_splits=n_splits, verbose=0)
 
 from estimators import regressor
 
-reg = regressor(K=15, Delta=1e2, shuffle=True, epochs=30, beta=0)
-s1 = scores(reg, X, y, "K", [450], n_splits=n_splits, verbose=0, n_jobs=10)
+def plot_figure():
+
+    reg = regressor(K=15, Delta=1e2, shuffle=True, epochs=30, beta=0)
+    s1 = scores(reg, X, y, "K", [450], n_splits=n_splits, verbose=0, n_jobs=10)
 
 
-sns.distplot(np.log(s1.T), label="(A2)", norm_hist=True)
-sns.distplot(np.log(s2.T), label="OLS", norm_hist=True)
-sns.distplot(np.log(shub.T), label="Huber", norm_hist=True)
+    sns.distplot(np.log(s1.T), label="(A2)", norm_hist=True)
+    sns.distplot(np.log(s2.T), label="OLS", norm_hist=True)
+    sns.distplot(np.log(shub.T), label="Huber", norm_hist=True)
 
-plt.legend()
-plt.show()
+    plt.legend()
+    plt.show()

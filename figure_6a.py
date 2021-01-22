@@ -134,13 +134,14 @@ def error(x, axis=0):
 
 # M and epochs are smaller that what was used in the article because what was used in the article is
 # rather long to compute.
+def plot_figure():
 
-Ks = np.arange(21, 180, 10)
-res = []
-for K in tqdm(Ks):
-    clf = regressor(K=K, eta0=0.01, Delta=1, beta=0, epochs=100)
-    res += [score(clf, M=50, N=900, nc=30)]
-    print(K, np.log(np.median(np.array(res), axis=1)))
-errorbar(Ks, np.median(res, axis=1), error(res, axis=1), "error", "b")
+    Ks = np.arange(21, 180, 10)
+    res = []
+    for K in tqdm(Ks):
+        clf = regressor(K=K, eta0=0.01, Delta=1, beta=0, epochs=100)
+        res += [score(clf, M=50, N=900, nc=30)]
+        print(K, np.log(np.median(np.array(res), axis=1)))
+    errorbar(Ks, np.median(res, axis=1), error(res, axis=1), "error", "b")
 
-plt.show()
+    plt.show()
