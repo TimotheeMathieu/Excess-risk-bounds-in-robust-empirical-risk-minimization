@@ -58,3 +58,5 @@ def plot_figure():
     plt.scatter(Xtrain[:, 0], Xtrain[:, 1], c=ytrain)
     plt.title("Ours")
     plt.show()
+if __name__ == '__main__':
+    plot_figure()

@@ -159,3 +159,5 @@ def plot_figure():
     errorbar(Ds, np.median(res151, axis=1), error(res151, axis=1), "K=151", color="green")
     plt.legend()
     plt.show()
+if __name__ == '__main__':
+    plot_figure()

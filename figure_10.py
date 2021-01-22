@@ -80,3 +80,5 @@ def plot_figure():
 
     plt.legend()
     plt.show()
+if __name__ == '__main__':
+    plot_figure()

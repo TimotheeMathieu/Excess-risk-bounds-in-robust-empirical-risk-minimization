@@ -218,3 +218,6 @@ def plot_figure():
     plt.legend()
     plt.title("N=1000, 100 outliers")
     plt.show()
+    
+if __name__ == '__main__':
+    plot_figure()

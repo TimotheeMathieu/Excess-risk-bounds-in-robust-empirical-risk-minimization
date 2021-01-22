@@ -145,3 +145,5 @@ def plot_figure():
     errorbar(Ks, np.median(res, axis=1), error(res, axis=1), "error", "b")
 
     plt.show()
+if __name__ == '__main__':
+    plot_figure()
